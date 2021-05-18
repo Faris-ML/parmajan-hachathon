@@ -1,0 +1,182 @@
+/* Global settings */
+* {
+  scroll-behavior: smooth;
+  font-family: Tajawal;
+}
+
+.btn {
+  background-color: #212529;
+  border-color: white;
+  color: white;
+  text-align: center;
+  font-family: Tajawal;
+  font-size: 16px;
+}
+
+/* ///////////////////////////// */
+#ShortLine {
+  width: 9%;
+  border: 2px solid #8FBCE6;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('../fonts/Tajawal-Medium.ttf') format('truetype') !important;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.owl-theme .owl-controls .owl-page.active span,
+.owl-theme .owl-controls .owl-page:hover span {
+  background: #29D18B !important;
+  border-color: #29D18B;
+}
+
+@media only screen and (max-width: 767px) {
+  .testimonial {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .testimonial .pic {
+    display: block;
+    position: static;
+    margin: 0 auto 15px;
+  }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.framing {
+  text-align: center;
+}
+
+iframe {
+  width: 63%;
+  height: 650px;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+#Webnav {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+}
+
+.topnav {
+  overflow: hidden;
+  background: #212529;
+  font-family: Tajawal-Medium;
+  font-weight: bold;
+}
+
+.topnav div div ul a {
+  font-weight: bold;
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.topnav div div ul a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.nav-link {
+  float: right !important;
+  color: #f2f2f2 !important;
+  text-align: center !important;
+  padding: 14px 16px !important;
+  text-decoration: none !important;
+  font-size: 20px !important;
+}
+
+.nav-link:hover {
+  text-decoration: underline !important;
+  font-size: 29px !important;
+  color: white !important;
+}
+
+#no {
+  text-decoration: none;
+  font-weight: bolder;
+  font-size: 32px;
+  color: white;
+}
+
+.VoteImg {
+  margin: auto;
+  width: 90%;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* student home */
+
+
+
+
+div.roundcircle {
+  margin: 60px;
+
+  text-align: center;
+  font-family: Tajawal;
+  font-size: 30px;
+  color: black;
+  font-weight: bold;
+  border: 2px solid gray;
+  border-radius: 12px;
+}
+
+
+
+
+
+
+
+div.welcomestu {
+  margin: 30px;
+  text-align: right;
+  font-family: Tajawal;
+  font-size: 30px;
+  color: black;
+  font-weight: normal;
+
+}
+
+
+
+
+
+span.stuname{
+  color: #1B98FA;
+    font-weight: bold;
+
+}
+
+p.errormasg{
+  color: black;
+    font-size: 30px;
+    font-weight: bolder;
+
+}
+p.showmasg{
+  color: black;
+    font-size: 25px;
+    font-weight: normal;
+
+}
