@@ -4,6 +4,8 @@ import arabic_reshaper
 import pyarabic
 from bidi.algorithm import get_display
 import re
+import jellyfish as jf
+
 def main():
     text = SpeechToText()
     sura = eval(input("enter sura to compare: "))
@@ -19,6 +21,7 @@ def SpeechToText():
         print('Say Something:')
         audio = r.listen(source)
         print ('Done!')
+        saveAudio(audio)
 
     try:
         text = r.recognize_google(audio, language = 'ar-SA')
@@ -29,28 +32,40 @@ def SpeechToText():
     except Exception as e:                  # speech is unintelligible
         print('failed'.format(e))
 
+def saveAudio(audio):
+    
+    # TODO
+    # insert into a database
+    # f9o0oly
+    with open('audio_file1.wav','wb') as file:
+        file.write(audio.get_wav_data())
+
 def printArabic(text):
     
-    text2 = transformTA2HA(text)
+    text3 = listToString(text)
+    text2 = transform(text3)
     reshaped_text = arabic_reshaper.reshape(text2)   # corrects the Arabic text shape
     bidi_text = get_display(reshaped_text)          # corrects the direction
     print(bidi_text)
 
 def getArabic(text):
     
-    text2 = transformTA2HA(text)
+    text3 = listToString(text)
+    text2 = transform(text3)
     reshaped_text = arabic_reshaper.reshape(text2)   # corrects the Arabic text shape
     bidi_text = get_display(reshaped_text)          # corrects the direction
     return bidi_text
 
 def printArabicOfVoice(text):
     
+    text2 = transform(text)
     reshaped_text = arabic_reshaper.reshape(text)   # corrects the Arabic text shape
     bidi_text = get_display(reshaped_text)          # corrects the direction
     print(bidi_text)
 
 def getArabicOfVoice(text):
     
+    text2 = transform(text)
     reshaped_text = arabic_reshaper.reshape(text)   # corrects the Arabic text shape
     bidi_text = get_display(reshaped_text)          # corrects the direction
     return bidi_text
@@ -60,20 +75,26 @@ def listToString(s):  # converts from list to string
     
     return str1.join(s)
 
-def transformTA2HA(text): # replaces all "ة" into "ه"
-    text2 = re.sub("[إأآا]", "ا", text)
-    text2 = re.sub("ى", "ي", text)
-    text2 = re.sub("ؤ", "ء", text)
-    text2 = re.sub("ئ", "ء", text)
-    text2 = re.sub("ه", "ة", text)
-    text2 = re.sub("گ", "ك", text)
-    return text2
+def transform(text): # replaces all "ة" into "ه"
+    
+    ta = u'\u0629' #"ة"
+    ha = u'\u0647' #"ه"
+    alif_maq = u'\u0649' #"ى"
+    ya = u'\u064A' #"ي"
+
+    text = re.sub("[إأآا]", "ا", text)
+    text = re.sub(ta, ha, text)
+    text = re.sub(alif_maq, ya, text)
+
+    return text
           
 def getAyat(suraNumber):
     Q = pq.quran # Quran Object
-    return Q.get_sura(suraNumber, with_tashkeel=False, basmalah=False)
+    return Q.get_sura(suraNumber, with_tashkeel=False, basmalah=True)
 
 def Compare(text, suraNumber, ayah_start = 0, ayah_end = 350):
     printArabic(getAyat(suraNumber))
+    text2 = getArabic(getAyat(suraNumber))
+    print(round(((len(text2) - jf.levenshtein_distance(text, text2)) / len(text2)) , 2) * 100)
 
 main()
