@@ -3,51 +3,68 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-       <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.rtl.min.css" integrity="sha384-jHiSqEim4+W1UCvv8kTcMbtCZlRF8MxbgKdfpvncia8gdN1UImBnhTpKtufREzv7" crossorigin="anonymous">
-
+        
+        <link rel="icon" href="static/Photos/webicon/icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.rtl.min.css" integrity="sha384-4dNpRvNX0c/TdYEbYup8qbjvjaMrgUPh+g4I03CnNtANuv+VAvPL6LqdwzZKV38G" crossorigin="anonymous"> -->
+      
+        <link rel="stylesheet" href="../static/css/bootstrap3.css">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <link rel="stylesheet" href="../static/css/login1.css">
+        <link rel="stylesheet" href="../static/css/login.css">
+        <link rel="stylesheet" href="../static/css/MyWebLib.css">
+        <link rel="stylesheet" href="../static/css/w3s.css">
+        
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-            <a class="navbar-brand" href="#">حلقة</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">الرئيسة </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">دخول</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">تسجيل جديد</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">عن حلقة</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">تواصل معنا</a>
-                </li>
-               
-              </ul>
-             
-            </div>
-          </div>
-          </nav>
+         <!---    List Of Menu     ------------->
+      <nav id="Webnav" style="direction:rtl" class="navbar navbar-light navbar-expand-md topnav">
+      <div class="container-fluid">
+       <img src="../static/Photos/webicon/icon1.png" height="95px"> <a class="navbar-brand" href="#" id="no"> </a>
 
+       <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle
+
+          navigation</span><span class="navbar-toggler-icon"></span></button>
+
+      <div class="collapse navbar-collapse" id="navcol-1">
+        <ul class="nav navbar-nav">
+          <a href="index.html">الرئيسية</a>
+          <a href=".html">عن حلقة</a>
+          <a href="vote.html">تواصل معنا</a>
+
+          <a href="login.html">
+
+            <button class="btn">تسجيل دخول</button>
+          </a>
+
+          <a href="#">|</a>
+
+          <a href="register.html">
+
+            <button class="btn">إنشاء حساب</button>
+
+          </a>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!---     List Of Menu     ------------->
+
+    {% block content %}
+    {% endblock %}
+
+    <script src='../static/js/jquery.min.js'></script>
+    <script src='../static/js/bootstrap.min.js'></script> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
          
-        <script 
-            type="text/javascript"
-            src="{{ url_for('static', filename='index.js') }}"
-        ></script>
     </body>
+    <footer id="tocolor">
+      ❤️جميع الحقوق محفوظة لمنصة حلقة ©2021
+      <br>
+    </footer>
 </html>
