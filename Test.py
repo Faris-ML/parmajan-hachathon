@@ -6,12 +6,16 @@ from bidi.algorithm import get_display
 import re
 import jellyfish as jf
 
+isBasmalah = False
+
 def main():
     text = SpeechToText()
+    
     sura = eval(input("enter sura to compare: "))
-    # beggin = eval(input("enter beggin ayah: "))
-    # finish = eval(input("enter finish ayah: "))
-    Compare(text, sura) # (text, sura number, ayah beggin, ahay end)
+    beggin = eval(input("enter beggining ayah: "))
+    finish = eval(input("enter finishing ayah: "))
+
+    Compare(text, sura, beggin, finish) # (text, sura number, ayah beggin, ahay end)
 
 def SpeechToText():
 
@@ -27,7 +31,9 @@ def SpeechToText():
         text = r.recognize_google(audio, language = 'ar-SA')
 
         printArabic(text)
-        return getArabic(text)
+        text2 = transform(text)
+        text3 = checkBasmalah(text2)
+        return getArabic(text3)
         
     except Exception as e:                  # speech is unintelligible
         print('failed'.format(e))
@@ -49,8 +55,7 @@ def printArabic(text):
 
 def getArabic(text):
     
-    text2 = transform(text)
-    reshaped_text = arabic_reshaper.reshape(text2)   # corrects the Arabic text shape
+    reshaped_text = arabic_reshaper.reshape(text)   # corrects the Arabic text shape
     bidi_text = get_display(reshaped_text)          # corrects the direction
     return bidi_text
 
@@ -71,15 +76,74 @@ def transform(text): # replaces all "ة" into "ه"
     text = re.sub(alif_maq, ya, text)
 
     return text
-          
-def getAyat(suraNumber):
-    Q = pq.quran # Quran Object
-    return Q.get_sura(suraNumber, with_tashkeel=False, basmalah=True) # returns list
 
-def Compare(text, suraNumber, ayah_start = 0, ayah_end = 350):
+def checkBasmalah(text0):
     
-    text2 = getArabic(listToString(getAyat(suraNumber)))
+    global isBasmalah
+    text = text0.split() # from string into list
+
+    if (text[0] == "اعوذ" and text[5] == "بسم"):
+        isBasmalah = True
+        text2 = removeAooth(text)
+        return listToString(text2) 
+    
+    elif (text[0] == "اعوذ"):
+        text2 = removeAooth(text)
+        return listToString(text2)
+
+    elif (text[0] == "بسم"):
+        isBasmalah = True
+        return listToString(text)
+
+    else:
+        return listToString(text)
+
+def removeAooth(text):
+
+    del text[0:5]
+    return text
+
+def getAyat(sura, start, end):
+    
+    if (isBasmalah and end == 0):
+        ayat = sura[(start):]
+        return ayat
+
+    elif (end == 0):
+        ayat = sura[(start - 1):]
+        return ayat
+
+    elif (isBasmalah):
+        ayat = sura[(start): (end)]
+        return ayat
+
+    else:
+        ayat = sura[(start - 1): (end - 1)]
+        return ayat
+
+def getSura(suraNumber):
+
+    Q = pq.quran # Quran Object
+    print(isBasmalah)
+    return Q.get_sura(suraNumber, with_tashkeel=False, basmalah=isBasmalah) # returns list
+
+def getLevenshteinRatio(text, text2):
+
+    return round(((len(text2) - jf.levenshtein_distance(text, text2)) / len(text2)) , 2) * 100 
+
+def Compare(text, suraNumber, ayah_start = 1, ayah_end = 0):
+  
+    text2 = getArabic(transform(listToString(getAyat(getSura(suraNumber), ayah_start , ayah_end))))
     print(text2)
-    print(round(((len(text2) - jf.levenshtein_distance(text, text2)) / len(text2)) , 2) * 100)
+    
+    if (isBasmalah):
+        #TODO
+        #text2 = [getArabic(getSura(suraNumber)[0])] + text2
+        #print(text2)
+
+        print(getLevenshteinRatio(text, text2))
+
+    else:
+        print(getLevenshteinRatio(text, text2))
 
 main()
