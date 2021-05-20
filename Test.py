@@ -26,8 +26,8 @@ def SpeechToText():
     try:
         text = r.recognize_google(audio, language = 'ar-SA')
 
-        printArabicOfVoice(text)
-        return getArabicOfVoice(text)
+        printArabic(text)
+        return getArabic(text)
         
     except Exception as e:                  # speech is unintelligible
         print('failed'.format(e))
@@ -42,31 +42,15 @@ def saveAudio(audio):
 
 def printArabic(text):
     
-    text3 = listToString(text)
-    text2 = transform(text3)
+    text2 = transform(text)
     reshaped_text = arabic_reshaper.reshape(text2)   # corrects the Arabic text shape
     bidi_text = get_display(reshaped_text)          # corrects the direction
     print(bidi_text)
 
 def getArabic(text):
     
-    text3 = listToString(text)
-    text2 = transform(text3)
+    text2 = transform(text)
     reshaped_text = arabic_reshaper.reshape(text2)   # corrects the Arabic text shape
-    bidi_text = get_display(reshaped_text)          # corrects the direction
-    return bidi_text
-
-def printArabicOfVoice(text):
-    
-    text2 = transform(text)
-    reshaped_text = arabic_reshaper.reshape(text)   # corrects the Arabic text shape
-    bidi_text = get_display(reshaped_text)          # corrects the direction
-    print(bidi_text)
-
-def getArabicOfVoice(text):
-    
-    text2 = transform(text)
-    reshaped_text = arabic_reshaper.reshape(text)   # corrects the Arabic text shape
     bidi_text = get_display(reshaped_text)          # corrects the direction
     return bidi_text
 
@@ -90,11 +74,12 @@ def transform(text): # replaces all "ة" into "ه"
           
 def getAyat(suraNumber):
     Q = pq.quran # Quran Object
-    return Q.get_sura(suraNumber, with_tashkeel=False, basmalah=True)
+    return Q.get_sura(suraNumber, with_tashkeel=False, basmalah=True) # returns list
 
 def Compare(text, suraNumber, ayah_start = 0, ayah_end = 350):
-    printArabic(getAyat(suraNumber))
-    text2 = getArabic(getAyat(suraNumber))
+    
+    text2 = getArabic(listToString(getAyat(suraNumber)))
+    print(text2)
     print(round(((len(text2) - jf.levenshtein_distance(text, text2)) / len(text2)) , 2) * 100)
 
 main()
