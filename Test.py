@@ -14,6 +14,13 @@ finish = eval(input("enter finishing ayah: "))
 def main(sura, beggin, finish):
     
     text = SpeechToText()
+    
+    # text1 = "بسم الله"
+    # text2 = "اعوذ بالله من الشيطان الرجيم بسم الله الرحمن الرحيم الم ذلك الكتاب"
+    # text3 = "اعوذ بالله من الشيطان الرجيم الم ذلك الكتاب"
+    # text4 = "قل هو الله الأحد"
+
+    # text = getArabic(checkBasmalah(transform(text)))
 
     Compare(text, sura, beggin, finish) # (text, sura number, ayah beggin, ahay end)
 
@@ -81,19 +88,10 @@ def checkBasmalah(text0):
     
     global sura
     text = text0.split() # from string into list
-
-    if (text[0] == "اعوذ" and text[5] == "بسم"):
-        if (sura == 1):
-            text2 = removeAooth(text)
-            return listToString(text2)
-            
-        else:
-            text2 = removeBasmalah(removeAooth(text))
-            return listToString(text2) 
     
-    elif (text[0] == "اعوذ"):
+    if (text[0] == "اعوذ"):
         text2 = removeAooth(text)
-        return listToString(text2)
+        return checkBasmalah(listToString(text))
 
     elif (text[0] == "بسم"):
         if (sura == 1):
@@ -150,6 +148,7 @@ def getUnsimilarityLocation(text, text2):
         #TODO
         #compare
         #return indecise of where text2 is missing
+        
     return
 
 
